@@ -237,7 +237,7 @@ input[type=checkbox] { width: 16px; height: 16px; cursor: pointer; accent-color:
 <div class="toast" id="toast"></div>
 
 <script>
-if (!sessionStorage.getItem('studio5_auth')) window.location.href = '/';
+if (!sessionStorage.getItem('studio5_auth')) window.location.href = 'https://saloon-backend-so2b.onrender.com/';
 
 let allLeads    = [];
 let selectedIds = new Set();
@@ -248,7 +248,7 @@ setInterval(loadLeads, 30000);
 
 async function loadLeads() {
   try {
-    const res  = await fetch('/leads');
+    const res  = await fetch('https://saloon-backend-so2b.onrender.com/leads');
     const data = await res.json();
     allLeads   = data.leads || [];
     updateStats();
@@ -425,7 +425,7 @@ async function confirmDelete() {
   const ids = [...selectedIds];
   let ok = 0;
   for (const id of ids) {
-    try { await fetch(`/leads/${id}`, { method: 'DELETE' }); ok++; } catch(e) {}
+    try { await fetch(`https://saloon-backend-so2b.onrender.com/leads/${id}`, { method: 'DELETE' }); ok++; } catch(e) {}
   }
   selectedIds.clear(); updateSelUI();
   await loadLeads();
@@ -447,7 +447,7 @@ async function setStatus(status) {
   if (!statusTarget) return;
   const { leadId, el } = statusTarget;
   try {
-    const res  = await fetch(`/leads/${leadId}/status`, {
+    const res  = await fetch(`https://saloon-backend-so2b.onrender.com/leads/${leadId}/status`, {
       method: 'PATCH',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ status })
@@ -484,7 +484,7 @@ function logout() {
 let lastSession = null;
 async function checkSession() {
   try {
-    const res = await fetch('/ping');
+    const res = await fetch('https://saloon-backend-so2b.onrender.com/ping');
     const d   = await res.json();
     if (!lastSession) { lastSession = d.session_id; return; }
     if (d.session_id !== lastSession) {
