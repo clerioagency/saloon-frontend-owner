@@ -571,6 +571,7 @@ async function setStatus(status){
   statusTarget=null;
 }
 document.addEventListener('click',()=>document.getElementById('statusDropdown').classList.remove('open'));
+document.addEventListener('scroll',()=>document.getElementById('statusDropdown').classList.remove('open'),true);
 
 let toastTimer;
 function showToast(msg){
