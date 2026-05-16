@@ -525,16 +525,17 @@ function openStatusMenu(e,leadId,el){
   statusTarget={leadId,el};
   const dd=document.getElementById('statusDropdown');
   const rect=el.getBoundingClientRect();
-  const ddWidth=150;
-  const ddHeight=160;
-  const margin=8;
+  const ddWidth=152;
+  const ddHeight=168;
+  const margin=10;
 
-  let top=rect.bottom+6+window.scrollY;
-  let left=rect.left+window.scrollX;
+  // Use viewport-relative positioning (fixed), no scroll offset needed
+  let top=rect.bottom+6;
+  let left=rect.left;
 
-  // flip up if not enough space below
+  // flip up if not enough space below viewport
   if(rect.bottom+ddHeight+margin>window.innerHeight){
-    top=rect.top-ddHeight-6+window.scrollY;
+    top=rect.top-ddHeight-6;
   }
   // push left if overflowing right edge
   if(left+ddWidth>window.innerWidth-margin){
@@ -543,6 +544,10 @@ function openStatusMenu(e,leadId,el){
   // never go off left edge
   if(left<margin)left=margin;
 
+  // keep inside top of viewport
+  if(top<margin)top=margin;
+
+  dd.style.position='fixed';
   dd.style.top=top+'px';
   dd.style.left=left+'px';
   dd.classList.add('open');
